@@ -14,7 +14,7 @@ app.use(cors());
 app.use(express.json())
 
 // Connect to MongoDB Atlas
-mongoose.connect("mongodb+srv://Vuedata:uMjRKdhyO8eqw46J@cluster0.h665i.mongodb.net/msaccounttracking?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("Need to add db credentials")
     .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error('Failed to connect to MongoDB Atlas', err));
 
