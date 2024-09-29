@@ -1,47 +1,36 @@
-const { mongoose, Schema } = require('mongoose');
+// No schema is required here, but we'll use a MySQL query function.
 
-// The ListmsaccounttrackingSchema defines the structure and validation rules for user data in MongoDB, including various string and date fields.
-// The Listmsaccounttracking model is created from this schema, allowing interaction with the corresponding MongoDB collection.
+const getAllUsersFromDB = (searchQuery, page, limit, callback) => {
+    const offset = (page - 1) * limit;
 
-const ListmsaccounttrackingSchema = new Schema({
-    ID: { type: String, required: true },
-    BGV_ID: { type: String, required: true },
-    Request_ID: { type: String, required: true },
-    Position_Type: { type: String, required: true },
-    PO_Number: { type: String, required: true },
-    Project: { type: String, required: true },
-    MS_Employee_ID: { type: String, required: true },
-    V_Account: { type: String, required: true },
-    First_Name: { type: String, required: true },
-    Last_Name: { type: String, required: true },
-    Middle_Name: { type: String, required: true },
-    Resource_Name: { type: String, required: true },
-    Legal_Name: { type: String, required: true },
-    VueData_Employee_ID: { type: String, required: true },
-    VueData_Email: { type: String, required: true },
-    Phone_Number: { type: Number, required: true },
-    Client_Partner: { type: String, required: true },
-    Client_Partner_Email: { type: String, required: true },
-    Client_Manager: { type: String, required: true },
-    Client_Manager_Email: { type: String, required: true },
-    Client_Lead: { type: String, required: true },
-    Client_Lead_Email: { type: String, required: true },
-    BGV_Submission_Date: { type: String, required: true },
-    BGV_Completion_Date: { type: String, required: true },
-    ECA_Submission_Date: { type: String, required: true },
-    ECA_Completion_Date: { type: String, required: true },
-    Expiry_Date: { type: Date, required: true },
-    Max_Policy_Expiry_Date: { type: Date, required: true },
-    Work_Start_Date: { type: Date, required: true },
-    OnSite_Offshore: { type: String, required: true },
-    Employment_Type: { type: String, required: true },
-    Primary_Skills: { type: String, required: true },
-    Secondary_Skills: { type: String, required: true },
-    Resource_Status: { type: String, required: true },
-    Billing_Status: { type: String, required: true },
-}, { timestamps: true });
+    let query = 'SELECT * FROM listmsaccounttrackings WHERE 1=1'; // Basic query
 
+    if (searchQuery) {
+        query += ` AND (Resource_Name LIKE '%${searchQuery}%' OR Client_Partner LIKE '%${searchQuery}%' OR V_Account LIKE '%${searchQuery}%')`;
+    }
 
-const Listmsaccounttracking = mongoose.model('listmsaccounttrackings', ListmsaccounttrackingSchema);
+    query += ` LIMIT ${limit} OFFSET ${offset}`;
 
-module.exports = { Listmsaccounttracking };
+    // Execute the query
+    global.db.query(query, (err, results) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, results);
+        }
+    });
+};
+
+const postUserToDB = (userData, callback) => {
+    const query = `INSERT INTO listmsaccounttrackings SET ?`;
+
+    global.db.query(query, userData, (err, result) => {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, result);
+        }
+    });
+};
+
+module.exports = { getAllUsersFromDB, postUserToDB };

@@ -1,24 +1,18 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const userRoute = require('./routes/user.route');
 const cors = require('cors');
-
-// The code sets up an Express server with CORS and JSON middleware, connects to MongoDB Atlas, and starts the server on port 5001.
-// It defines a basic GET endpoint and sets up routing for user-related requests through the `userRoute` module.
+const userRoute = require('./routes/user.route');
+const { connectDB } = require('./config/db.config'); // Import MySQL connection
 
 // Set up Express
 const app = express();
 const port = 5001;
 
 app.use(cors());
-app.use(express.json())
+app.use(express.json());
 
-// Connect to MongoDB Atlas
-mongoose.connect("Need to add db credentials")
-    .then(() => console.log('Connected to MongoDB Atlas'))
-    .catch(err => console.error('Failed to connect to MongoDB Atlas', err));
+// Connect to MySQL Database
+connectDB();
 
-//
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
@@ -28,4 +22,4 @@ app.get('/', async (req, res) => {
     res.status(201).json({ Message: 'Healthy request' });
 });
 
-app.use('/users', userRoute)
+app.use('/users', userRoute);
