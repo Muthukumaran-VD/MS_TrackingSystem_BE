@@ -12,7 +12,7 @@ const connectDB = () => {
         if (err) {
             console.error('Failed to connect to MySQL:', err);
         } else {
-            console.log('Connected to MySQL Database');
+            console.log('Connected to MySQL Database    ');
         }
     });
 
