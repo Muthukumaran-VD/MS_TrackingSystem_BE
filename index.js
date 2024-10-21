@@ -1,7 +1,10 @@
+// index.js
+
 const express = require('express');
 const cors = require('cors');
-const userRoute = require('./routes/user.route');
-const { connectDB } = require('./config/db.config'); // Import MySQL connection
+const userRoute = require('./src/routes/UserRoutes');
+const { connectDB } = require('./src/config/database');
+require('dotenv').config(); // Load environment variables from .env file
 
 // Set up Express
 const app = express();
@@ -19,7 +22,9 @@ app.listen(port, () => {
 
 // Define the GET endpoint
 app.get('/', async (req, res) => {
-    res.status(201).json({ Message: 'Healthy request' });
+    res.status(201).json({ Message: 'Backend Running' });
 });
 
+// Use user routes
 app.use('/users', userRoute);
+

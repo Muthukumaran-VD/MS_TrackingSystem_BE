@@ -1,18 +1,19 @@
 const mysql = require('mysql2');
+require('dotenv').config();
 
 const connectDB = () => {
     const connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: 'Root',
-        database: 'msaccounttracking', // Replace with your database name
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME, // Replace with your database name
     });
 
     connection.connect(err => {
         if (err) {
             console.error('Failed to connect to MySQL:', err);
         } else {
-            console.log('Connected to MySQL Database    ');
+            console.log('Connected to MySQL Database');
         }
     });
 

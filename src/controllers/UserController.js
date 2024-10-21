@@ -1,5 +1,13 @@
-const { getAllUsersFromDB, postUserToDB } = require('../models/user.model');
+// controllers/UserController.js
 
+const { getAllUsersFromDB, postUserToDB } = require('../models/User');
+const NodemailerService = require('../services/NodemailerService'); // Use Nodemailer
+// const AzureMailService = require('../services/AzureMailService'); // Uncomment to use Azure Mail Service
+
+// Choose the email service
+const emailService = new NodemailerService(); // Change to new AzureMailService() to use Azure
+
+// Get all users with pagination and search
 // Get all users with pagination and search
 const getAllUsers = async (req, res) => {
     try {
@@ -13,7 +21,7 @@ const getAllUsers = async (req, res) => {
                     users,
                     totalPages: all ? 1 : Math.ceil(users.length / limit),
                     currentPage: parseInt(page),
-                    totalUsers: users.length
+                    totalUsers: users.length,
                 });
             }
         });
@@ -41,4 +49,18 @@ const postUser = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, postUser };
+// Send email function
+const sendEmailHandler = async (req, res) => {
+    const { to, cc } = req.body; // Get the email addresses from the request body
+    console.log('Received email:', { to, cc }); // Print email to the console
+
+    try {
+        await emailService.sendEmail(to, cc, 'BGV Request', 'This is a test email for the BGV Request.');
+        res.status(200).json({ message: 'Email sent successfully' });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).json({ error: 'Failed to send email' });
+    }
+};
+
+module.exports = { getAllUsers, postUser, sendEmailHandler };
