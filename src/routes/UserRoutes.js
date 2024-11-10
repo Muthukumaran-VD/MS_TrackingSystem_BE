@@ -1,6 +1,9 @@
 // routes/UserRoutes.js
 
-const { getAllUsers, postUser, sendEmailHandler, updateUser } = require('../controllers/UserController');
+const { sendEmailHandler } = require('../controllers/SendMailToUser');
+const { getAllUsers } = require('../controllers/GetUsers');
+const { updateUser } = require('../controllers/UpdateUser');
+const { postUser } = require('../controllers/PostUser');
 const { postPasswordUser } = require('../controllers/UserPasswordController');
 const { loginUser } = require('../controllers/UserLoginAuthController');
 
