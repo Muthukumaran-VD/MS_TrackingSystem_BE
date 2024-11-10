@@ -1,11 +1,12 @@
 // controllers/UserController.js
 
-const { getAllUsersFromDB, postUserToDB } = require('../models/User');
+const { getAllUsersFromDB, postUserToDB, updateUserInDB} = require('../database/UserDatabase');
 const NodemailerService = require('../services/NodemailerService'); // Use Nodemailer
 
 // Choose the email service
 const emailService = new NodemailerService(); // Change to new AzureMailService() to use Azure
 
+// Get all users with pagination and search
 // Get all users with pagination and search
 const getAllUsers = async (req, res) => {
     try {
@@ -47,31 +48,45 @@ const postUser = async (req, res) => {
     }
 };
 
-// Send email function with database storage
+
+// Function to update an existing user in the database by ID
+const updateUser = async (req, res) => {
+    try {
+        const { userId } = req.params;  // Get user ID from the URL params
+        const updatedData = req.body;   // Get the updated data from the request body
+
+        // Check if there is updated data
+        if (Object.keys(updatedData).length === 0) {
+            return res.status(400).json({ error: 'No data to update' });
+        }
+
+        console.log(updatedData); // Log the updated data (for debugging purposes)
+
+        // Call the function to update the user in the database
+        const result = await updateUserInDB(userId, updatedData);
+        
+        // If the update was successful, return the result
+        res.status(200).json({ message: 'User updated successfully', result });
+
+    } catch (err) {
+        console.error('Error updating user:', err);
+        res.status(500).json({ error: 'Error updating user', details: err.message });
+    }
+};
+
+
+// Send email function
 const sendEmailHandler = async (req, res) => {
     const { to, cc } = req.body; // Get the email addresses from the request body
     console.log('Received email:', { to, cc }); // Print email to the console
 
-    // Define the subject and body text of the email
-    const subject = 'BGV Request';
-    const text = 'I have initiated BGV on HireRight. You must have received an email to complete further details and submit your profile. Please confirm once this is done. Form Link: http://localhost:3000/bgv-request';
-
     try {
-        // Send the email using the email service
-        await emailService.sendEmail(to, cc, subject, text);
-
-        // After successfully sending the email, store the "to" email address in the database
-        postUserToDB({ VueData_Email: to }, (err, result) => { // Use the correct column name
-            if (err) {
-                console.error('Error saving email to database:', err);
-                return res.status(500).json({ error: 'Failed to send email and save to database' });
-            }
-            res.status(200).json({ message: 'Email sent and recipient stored successfully' });
-        });
+        await emailService.sendEmail(to, cc, 'BGV Request', 'This is a test email for the BGV Request.');
+        res.status(200).json({ message: 'Email sent successfully' });
     } catch (error) {
         console.error('Error sending email:', error);
         res.status(500).json({ error: 'Failed to send email' });
     }
 };
 
-module.exports = { getAllUsers, postUser, sendEmailHandler };
+module.exports = { getAllUsers, postUser, sendEmailHandler, updateUser};

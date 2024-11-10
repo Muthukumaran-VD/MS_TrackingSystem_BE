@@ -3,7 +3,8 @@
 const express = require('express');
 const cors = require('cors');
 const userRoute = require('./src/routes/UserRoutes');
-const { connectDB } = require('./src/config/database');
+const { connectDB } = require('./src/config/DatabaseConfig');
+const { createUsersTableIfNotExists } = require('./src/database/UserPasswordDatabase');  
 require('dotenv').config(); // Load environment variables from .env file
 
 // Set up Express
@@ -15,6 +16,9 @@ app.use(express.json());
 
 // Connect to MySQL Database
 connectDB();
+
+// Create the users table if it doesn't exist
+createUsersTableIfNotExists();  // Ensure the table is created on server start
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
