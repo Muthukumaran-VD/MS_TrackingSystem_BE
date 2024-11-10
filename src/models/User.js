@@ -23,15 +23,39 @@ const getAllUsersFromDB = (searchQuery, page, limit, callback) => {
 };
 
 const postUserToDB = (userData, callback) => {
-    const query = `INSERT INTO listmsaccounttrackings SET ?`;
+    // First, retrieve the last inserted ID from the table
+    const getLastIdQuery = `SELECT ID FROM listmsaccounttrackings WHERE ID LIKE 'ID%' ORDER BY ID DESC LIMIT 1`;
 
-    global.db.query(query, userData, (err, result) => {
+    global.db.query(getLastIdQuery, (err, result) => {
         if (err) {
-            callback(err, null);
-        } else {
-            callback(null, result);
+            return callback(err, null);
         }
+
+        // Extract the numeric part of the last ID and increment it
+        let newId;
+        if (result.length > 0) {
+            // If there is an existing ID, extract the numeric part and increment it
+            const lastId = result[0].ID; // e.g., "ID005"
+            const lastNum = parseInt(lastId.slice(2), 10); // extract "005" and convert to integer
+            newId = `ID${String(lastNum + 1).padStart(3, '0')}`; // Increment and pad to 3 digits, e.g., "ID006"
+        } else {
+            // If no existing ID, start with the first ID
+            newId = 'ID001';
+        }
+
+        // Add the new ID to userData and insert it into the database
+        const insertQuery = `INSERT INTO listmsaccounttrackings (ID, VueData_Email) VALUES (?, ?)`;
+
+        global.db.query(insertQuery, [newId, userData.VueData_Email], (err, result) => {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, { id: newId, ...userData });
+            }
+        });
     });
 };
+
+
 
 module.exports = { getAllUsersFromDB, postUserToDB };
