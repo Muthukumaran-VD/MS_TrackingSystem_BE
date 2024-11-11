@@ -1,4 +1,4 @@
-const { postUserToDB } = require('../database/UserDatabase');
+const { postUserToDB } = require('../database/PostUserIntoDatabase');
 // Add a new user
 const postUser = async (req, res) => {
     try {

@@ -1,4 +1,4 @@
-const { getAllUsersFromDB} = require('../database/UserDatabase');
+const { getAllUsersFromDB} = require('../database/GetUserIntoDatabase');
 // Get all users with pagination and search
 // Get all users with pagination and search
 const getAllUsers = async (req, res) => {
