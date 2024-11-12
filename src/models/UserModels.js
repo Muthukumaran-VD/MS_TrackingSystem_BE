@@ -141,6 +141,10 @@ const UserModel = {
     Billing_Status: {
         type: 'VARCHAR(255)',
         description: 'Billing status of the resource'
+    },
+    Status: { 
+        type: 'VARCHAR(255)',
+        description: 'General status of the resource (e.g., active, pending, archived)'
     }
 };
 

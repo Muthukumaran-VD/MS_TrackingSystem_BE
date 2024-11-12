@@ -1,21 +1,25 @@
 // controllers/UserController.js
-const NodemailerService = require('../services/NodemailerService'); // Use Nodemailer
+const NodemailerService = require('../services/NodemailerService');
+const { insertEmailData } = require('../database/PostUserMaild');
+const emailService = new NodemailerService();
 
-// Choose the email service
-const emailService = new NodemailerService(); // Change to new AzureMailService() to use Azure
-
-
-// Send email function
 const sendEmailHandler = async (req, res) => {
-    const { to, cc } = req.body; // Get the email addresses from the request body
-    console.log('Received email:', { to, cc }); // Print email to the console
+    const { to, cc } = req.body;
 
     try {
-        await emailService.sendEmail(to, cc, 'BGV Request', 'This is a test email for the BGV Request.');
-        res.status(200).json({ message: 'Email sent successfully' });
+        // Step 1: Send the email
+        const emailResult = await emailService.sendBGVRequestEmail(to, cc);
+
+        if (emailResult.success) {
+            // Step 2: Generate a new ID and insert the email data into DB
+            const newId = await insertEmailData(to);
+            res.status(200).json({ message: 'BGV email sent and data stored successfully', id: newId });
+        } else {
+            res.status(500).json({ error: 'Failed to send BGV email' });
+        }
     } catch (error) {
-        console.error('Error sending email:', error);
-        res.status(500).json({ error: 'Failed to send email' });
+        console.error('Error in sendEmailHandler:', error);
+        res.status(500).json({ error: 'Error processing the email and storing data' });
     }
 };
 

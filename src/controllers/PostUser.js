@@ -3,7 +3,6 @@ const { postUserToDB } = require('../database/PostUserIntoDatabase');
 const postUser = async (req, res) => {
     try {
         const newData = req.body;
-
         postUserToDB(newData, (err, result) => {
             if (err) {
                 res.status(500).json({ error: 'Failed to add data' });

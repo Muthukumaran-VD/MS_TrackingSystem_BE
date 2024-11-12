@@ -1,4 +1,4 @@
-// src/services/NodemailerService.js
+// Update NodemailerService.js
 
 const nodemailer = require('nodemailer');
 const EmailService = require('./EmailService');
@@ -9,10 +9,11 @@ class NodemailerService extends EmailService {
         super();
         // Create a transporter to send emails using Gmail service
         this.transporter = nodemailer.createTransport({
-            service: 'gmail', // Email service (Gmail in this case)
+            service: 'gmail',
+            secure: false, // Uses STARTTLS instead of SSL/TLS
             auth: {
-                user: process.env.EMAIL_USER, // Your Gmail address from .env
-                pass: process.env.EMAIL_PASS,  // Your Gmail password from .env
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
             },
         });
     }
@@ -38,14 +39,16 @@ class NodemailerService extends EmailService {
         }
     }
 
-    // Function to send BGV request email
+    // Function to send BGV request email with dynamic content
     async sendBGVRequestEmail(to, cc) {
         const subject = "Request for BGV"; // Subject for BGV email
         const text = `
-            I have initiated BGV on HireRight. You must have received an email to complete further details and submit your profile. Please confirm once this is done.
+Hi ${to},
 
-            Form link: http://localhost:3000/bgv-employeeform
-        `; // Text body for BGV email
+I have initiated BGV on HireRight. You must have received an email to complete further details and submit your profile. Please confirm once this is done.
+
+Form link: http://localhost:3000/bgv-employeeform
+        `; // Text body for BGV email, including the dynamic recipient's email
 
         // Use the generic sendEmail function to send the BGV email
         return this.sendEmail(to, cc, subject, text);
