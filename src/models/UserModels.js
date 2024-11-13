@@ -110,6 +110,10 @@ const UserModel = {
         type: 'DATE',
         description: 'Expiry date of the resource'
     },
+    Request_Raised_Date: {
+        type: 'DATE',
+        description: 'Request_Raised_Date from manager'
+    },
     Max_Policy_Expiry_Date: {
         type: 'DATE',
         description: 'Max policy expiry date'
@@ -145,6 +149,19 @@ const UserModel = {
     Status: { 
         type: 'VARCHAR(255)',
         description: 'General status of the resource (e.g., active, pending, archived)'
+    },
+    // Adding the new fields
+    Country: {
+        type: 'VARCHAR(100)',
+        description: 'Country where the resource is based'
+    },
+    Title: {
+        type: 'VARCHAR(100)',
+        description: 'Job title of the resource'
+    },
+    manager: {
+        type: 'VARCHAR(100)',
+        description: 'Internally manage the MS-project'
     }
 };
 

@@ -1,4 +1,4 @@
-const { updateUserInDB } = require('../database/UpdateUserIntoDatabase');
+const { updateUserInDB } = require('../../database/employee/UpdateUserIntoDatabase');
 // Function to update an existing user in the database by ID
 const updateUser = async (req, res) => {
     try {

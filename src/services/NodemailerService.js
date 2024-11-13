@@ -1,5 +1,4 @@
-// Update NodemailerService.js
-
+// services/NodemailerService.js
 const nodemailer = require('nodemailer');
 const EmailService = require('./EmailService');
 require('dotenv').config(); // Load environment variables from .env file

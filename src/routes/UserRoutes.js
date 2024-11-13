@@ -1,9 +1,8 @@
 // routes/UserRoutes.js
 
-const { sendEmailHandler } = require('../controllers/SendMailToUser');
-const { getAllUsers } = require('../controllers/GetUsers');
-const { updateUser } = require('../controllers/UpdateUser');
-const { postUser } = require('../controllers/PostUser');
+const { sendEmailHandler } = require('../controllers/employee/SendMailToUser');
+const { getAllUsers } = require('../controllers/employee/GetUsers');
+const { updateUser } = require('../controllers/employee/UpdateUser');
 const { postPasswordUser } = require('../controllers/UserPasswordController');
 const { loginUser } = require('../controllers/UserLoginAuthController');
 const { getAllStatuses } = require('../controllers/EmployeeRequestStatus/GetEmployeeRequestStatus');
@@ -17,7 +16,6 @@ const { deleteStatus } = require('../controllers/EmployeeRequestStatus/DeleteEmp
 const router = express.Router();
 
 router.get('/', getAllUsers);
-router.post('/add', postUser);
 router.post('/send-email', sendEmailHandler);
 router.put('/user/:userId', updateUser);
 router.post('/signup', postPasswordUser);
