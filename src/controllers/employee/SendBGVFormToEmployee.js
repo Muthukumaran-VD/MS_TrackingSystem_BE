@@ -10,7 +10,6 @@ const sendEmailHandler = async (req, res) => {
     try {
         // Step 1: Send the email
         const emailResult = await emailService.sendBGVRequestEmail(to, cc);
-
         if (emailResult.success) {
             // Step 2: Insert the email and form data into the database
             const newId = await insertEmailData(formData);

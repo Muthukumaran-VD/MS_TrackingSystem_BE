@@ -1,17 +1,17 @@
 // routes/UserRoutes.js
 
-const { sendEmailHandler } = require('../controllers/employee/SendMailToUser');
-const { getAllUsers } = require('../controllers/employee/GetUsers');
-const { updateUser } = require('../controllers/employee/UpdateUser');
+const { sendEmailHandler } = require('../controllers/employee/SendBGVFormToEmployee');
+const { getAllUsers } = require('../controllers/employee/GetAllEmployees.Controller');
+const { updateUser } = require('../controllers/employee/UpdateEmployeebyId');
 const { postPasswordUser } = require('../controllers/UserPasswordController');
 const { loginUser } = require('../controllers/UserLoginAuthController');
-const { getAllStatuses } = require('../controllers/EmployeeRequestStatus/GetEmployeeRequestStatus');
-const { createStatus } = require('../controllers/EmployeeRequestStatus/PostEmployeeRequestStatus');
-const { updateStatus } = require('../controllers/EmployeeRequestStatus/UpdateEmployeeRequestStatus');
-const { deleteStatus } = require('../controllers/EmployeeRequestStatus/DeleteEmployeeRequestStatus');
-const { postMailId } = require('../controllers/email_crud/PostMail');
-const { getAllEmailIds } = require('../controllers/email_crud/GetMail');
-const { updateUserStatus } = require('../controllers/updatingUserStatus/UpdatingUserStatus');
+const { getAllStatuses } = require('../masterData/Controller/employeeStatusCrud/GetEmployeeStatus.Contoller');
+const { createStatus } = require('../masterData/Controller/employeeStatusCrud/PostEmployeeStatus.Contoller');
+const { updateStatus } = require('../masterData/Controller/employeeStatusCrud/UpdateEmployeeStatus.Contoller');
+const { deleteStatus } = require('../masterData/Controller/employeeStatusCrud/DeleteEmployeeStatus.Controller');
+const { postMailId } = require('../masterData/Controller/MaildCrud/PostMaild.Contoller');
+const { getAllEmailIds } = require('../masterData/Controller/MaildCrud/GetMailId.Controller');
+const { updateUserStatus } = require('../controllers/updatingEmployeeStatus/UpdatingEmployeeStatus');
 const express = require('express');
 const router = express.Router();
 router.get('/', getAllUsers);

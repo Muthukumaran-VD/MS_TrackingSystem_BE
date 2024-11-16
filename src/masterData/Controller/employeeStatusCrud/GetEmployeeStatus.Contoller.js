@@ -1,4 +1,4 @@
-const { getAllStatusesFromDB } = require("../../database/EmployeeRequestStatus/GetEmployeeRequestStatus");
+const { getAllStatusesFromDB } = require("../../database/employeeStatusCrud/GetEmployeeStatus.db");
 
 // Get all statuses
 const getAllStatuses = async (req, res) => {

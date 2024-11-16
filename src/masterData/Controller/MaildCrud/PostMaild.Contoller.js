@@ -1,4 +1,4 @@
-const { saveEmail } = require("../../database/email_crud/PostMail");
+const { saveEmail } = require("../../database/MaildCrud/PostMaild.db");
 
 // controllers/emailController.js
 const postMailId = async (req, res) => {

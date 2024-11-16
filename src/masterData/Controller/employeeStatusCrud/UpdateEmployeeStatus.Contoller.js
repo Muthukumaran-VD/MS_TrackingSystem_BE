@@ -1,12 +1,10 @@
-const { getAllStatusesFromDB } = require("../../database/EmployeeRequestStatus/GetEmployeeRequestStatus");
-const { updateStatusInDB } = require("../../database/EmployeeRequestStatus/UpdateEmployeeRequestStatus");
+const { getAllStatusesFromDB } = require("../../database/employeeStatusCrud/GetEmployeeStatus.db");
+const { updateStatusInDB } = require("../../database/employeeStatusCrud/UpdateEmployeeStatus.db");
 
 // Update an existing status by ID
 const updateStatus = async (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
-    console.log(name);
-  
     // Validate if name is provided
     if (!name || !name.trim()) {
       return res.status(400).json({ error: 'Status name is required' });

@@ -1,5 +1,5 @@
 // controllers/emailController.js
-const { getAllEmails } = require('../../database/email_crud/GetMail');
+const { getAllEmails } = require('../../database/MaildCrud/GetMaild.db');
 
 // Controller function to get all emails
 const getAllEmailIds = async (req, res) => {

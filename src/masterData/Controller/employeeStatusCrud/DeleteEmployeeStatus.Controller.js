@@ -1,5 +1,5 @@
-const { deleteStatusInDB } = require("../../database/EmployeeRequestStatus/DeleteEmployeeRequestStatus");
-const { getAllStatusesFromDB } = require("../../database/EmployeeRequestStatus/GetEmployeeRequestStatus");
+const { deleteStatusInDB } = require("../../database/employeeStatusCrud/DeleteEmployeeStatus.db");
+const { getAllStatusesFromDB } = require("../../database/employeeStatusCrud/GetEmployeeStatus.db");
 
 // Delete a status by ID
 const deleteStatus = async (req, res) => {
