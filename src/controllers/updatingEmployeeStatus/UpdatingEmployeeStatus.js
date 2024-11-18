@@ -2,7 +2,6 @@ const { updateUserStatusId, checkUserById } = require('../../database/updaingUse
 
 const updateUserStatus = async (req, res) => {
     const { userId, status } = req.body;
-
     try {
         const userExists = await checkUserById(userId);
         if (!userExists) {

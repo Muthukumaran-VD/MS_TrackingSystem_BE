@@ -9,9 +9,6 @@ const updateUser = async (req, res) => {
         if (Object.keys(updatedData).length === 0) {
             return res.status(400).json({ error: 'No data to update' });
         }
-
-        console.log(updatedData); // Log the updated data (for debugging purposes)
-
         // Call the function to update the user in the database
         const result = await updateUserInDB(userId, updatedData);
         

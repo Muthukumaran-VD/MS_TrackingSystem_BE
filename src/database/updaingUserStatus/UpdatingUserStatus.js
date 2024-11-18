@@ -16,18 +16,13 @@ const checkUserById = async (userId) => {
 
 const updateUserStatusId = async (userId, status) => {
     try {
-        console.log(userId, status);
         const query = ` 
             UPDATE listmsaccounttrackings 
             SET BGV_Request_status = ? 
             WHERE ID = ?
         `;
-
         // Execute the query with status and userId as parameters (this returns a promise now)
         const [result] = await db.promise().query(query, [status, userId]);
-
-        console.log("User status updated successfully");
-
         // Return the result so the controller can access 'affectedRows'
         return result;
     } catch (error) {

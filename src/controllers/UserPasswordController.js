@@ -5,8 +5,6 @@ const { postUserPasswordToDB } = require('../database/UserPasswordDatabase');
 const postPasswordUser = async (req, res) => {
   try {
     const newUser = req.body;  // Get user data from request body
-    // Call the function to insert the new user into the database
-    console.log(newUser);
     postUserPasswordToDB(newUser, (err, result) => {
       if (err) {
         res.status(500).json({ error: 'Failed to add user' });

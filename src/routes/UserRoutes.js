@@ -13,7 +13,13 @@ const { postMailId } = require('../masterData/Controller/MaildCrud/PostMaild.Con
 const { getAllEmailIds } = require('../masterData/Controller/MaildCrud/GetMailId.Controller');
 const { updateUserStatus } = require('../controllers/updatingEmployeeStatus/UpdatingEmployeeStatus');
 const express = require('express');
+const { getEmployeeDataById } = require('../controllers/employee/GetEmployeeDataById.Controller');
+
 const router = express.Router();
+
+
+
+
 router.get('/', getAllUsers);
 router.post('/send-email', sendEmailHandler);
 router.put('/user/:userId', updateUser);
@@ -27,7 +33,7 @@ router.post('/api/entries/', createStatus);
 router.put('/api/entries/:id', updateStatus);
 // Route to delete a specific status by ID
 router.delete('/api/entries/:id', deleteStatus);
-
+router.get('/bgv-employeeform/:id', getEmployeeDataById);
 router.post('/adding-mail', postMailId);
 
 router.get('/emails', getAllEmailIds);
