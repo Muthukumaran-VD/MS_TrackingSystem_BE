@@ -4,7 +4,7 @@ const updateUser = async (req, res) => {
     try {
         const { userId } = req.params;  // Get user ID from the URL params
         const updatedData = req.body;   // Get the updated data from the request body
-
+        console.log(updatedData);
         // Check if there is updated data
         if (Object.keys(updatedData).length === 0) {
             return res.status(400).json({ error: 'No data to update' });

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>BGV Request</title>
     <style>
@@ -22,23 +23,12 @@
         }
 
         .header {
-            background-color: #007bff;
             font-weight: bold;
             border-bottom: 2px solid #007bff;
-            padding-bottom: 10px;
-        }
-
-        .header img {
-            height: 50px;
-        }
-
-        .header h3 {
-            font-size: 1.2rem;
-            margin: 0;
-            text-align: center;
-            color: white;
-            text-align: center;
-            flex-grow: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            justify-content: space-between
         }
 
         .content {
@@ -61,12 +51,78 @@
         }
 
         .footer {
-            margin-top: 20px;
+            margin-top: 5px;
             font-size: 0.85em;
             text-align: center;
             color: #777;
             border-top: 1px solid #ddd;
             padding-top: 10px;
+        }
+
+        .vuedatalogo {
+            height: 100px;
+            width: 120px;
+        }
+
+        h3 {
+            margin-top: 30px;
+            font-size: 15px;
+        }
+
+        .microsoftlogo {
+            height: 50px;
+            margin-top: 20px;
+        }
+
+        /* Media Queries */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .vuedatalogo,
+            .microsoftlogo {
+                margin: 10px auto;
+            }
+
+            h3 {
+                margin-top: 15px;
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+
+            .vuedatalogo {
+                height: 80px;
+                width: 100px;
+            }
+
+            .microsoftlogo {
+                height: 40px;
+            }
+
+            h3 {
+                font-size: 12px;
+            }
+
+            .content p {
+                font-size: 0.9em;
+            }
+
+            .footer {
+                font-size: 0.75em;
+            }
         }
     </style>
 </head>
@@ -74,7 +130,13 @@
 <body>
     <div class="container">
         <div class="header">
+            <img class="microsoftlogo"
+                src="https://blogs.microsoft.com/wp-content/uploads/2012/08/8867.Microsoft_5F00_Logo_2D00_for_2D00_screen.jpg"
+                alt="">
             <h3>Microsoft Account Tracking System</h3>
+            <img class="vuedatalogo"
+                src="https://images.crunchbase.com/image/upload/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1/vghlryldpnqifbgwv4at"
+                alt="">
         </div>
         <div class="content">
             <p>Hi <strong>{{to}}</strong>,</p>

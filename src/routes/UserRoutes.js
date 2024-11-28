@@ -1,6 +1,6 @@
 // routes/UserRoutes.js
 
-const { sendEmailHandler } = require('../controllers/employee/SendBGVFormToEmployee');
+const { sendEmailHandler, sendEmailAndUpdateData } = require('../controllers/employee/SendBGVFormToEmployee');
 const { getAllUsers } = require('../controllers/employee/GetAllEmployees.Controller');
 const { updateUser } = require('../controllers/employee/UpdateEmployeebyId');
 const { postPasswordUser } = require('../controllers/UserPasswordController');
@@ -14,9 +14,14 @@ const { getAllEmailIds } = require('../masterData/Controller/MaildCrud/GetMailId
 const { updateUserStatus } = require('../controllers/updatingEmployeeStatus/UpdatingEmployeeStatus');
 const express = require('express');
 const { getEmployeeDataById } = require('../controllers/employee/GetEmployeeDataById.Controller');
+const multer = require('multer');
+
 
 const router = express.Router();
 
+const upload = multer({
+    dest: 'uploads/' // Temporary folder for file uploads
+});
 
 
 
@@ -25,10 +30,12 @@ router.post('/send-email', sendEmailHandler);
 router.put('/user/:userId', updateUser);
 router.post('/signup', postPasswordUser);
 router.post('/login', loginUser);
+
 // Route to get all statuses
 router.get('/statuses', getAllStatuses);
+
 // Route to create a new status
-router.post('/api/entries/', createStatus);
+router.post('/api/entries/', createStatus); 
 // Route to update a specific status by ID
 router.put('/api/entries/:id', updateStatus);
 // Route to delete a specific status by ID
@@ -38,6 +45,10 @@ router.post('/adding-mail', postMailId);
 
 router.get('/emails', getAllEmailIds);
 router.post('/updatinguserstatus', updateUserStatus);
+
+
+router.put('/update-aadhar-email', upload.single('aadharDocument'), sendEmailAndUpdateData);
+
 
 
 module.exports = router;

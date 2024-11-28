@@ -19,26 +19,6 @@ class NodemailerService extends EmailService {
         });
     }
 
-    // Generic send email function
-    async sendEmail(to, cc, subject, htmlContent) {
-        const mailOptions = {
-            from: process.env.EMAIL_USER, // Sender email (configured in .env)
-            to,  // Recipient email
-            cc,  // CC recipients
-            subject, // Subject line
-            html: htmlContent, // Email body content in HTML format
-        };
-
-        try {
-            // Sending the email
-            await this.transporter.sendMail(mailOptions);
-            return { success: true };
-        } catch (error) {
-            console.error('Error sending email:', error);
-            throw new Error('Failed to send email with Nodemailer');
-        }
-    }
-
     // Function to send BGV request email with dynamic content, including ID in URL
     async sendBGVRequestEmail(to, cc, newId) {
         const subject = "Request for BGV"; // Subject for BGV email
@@ -55,6 +35,66 @@ class NodemailerService extends EmailService {
 
         // Step 3: Use the generic sendEmail function to send the email
         return this.sendEmail(to, cc, subject, htmlContent);
+    }
+
+    // Generic send email function
+    async sendEmail(to, cc, subject, htmlContent, attachments = []) {
+        const mailOptions = {
+            from: process.env.EMAIL_USER, // Sender email (configured in .env)
+            to,  // Recipient email
+            cc,  // CC recipients
+            subject, // Subject line
+            html: htmlContent, // Email body content in HTML format
+            attachments, // Attachments array
+        };
+
+        try {
+            // Sending the email
+            await this.transporter.sendMail(mailOptions);
+            return { success: true };
+        } catch (error) {
+            console.error('Error sending email:', error);
+            throw new Error('Failed to send email with Nodemailer');
+        }
+    }
+
+    // Function to send Aadhar email with document attachment
+    async sendAadharEmail(to, cc, formData, aadharDocument) {
+        console.log(formData);
+        const subject = "Aadhar Document Submission for BGV";
+        const htmlContent = `
+            <p>First Name : ${formData.firstName}</p>
+            <p>Middle Name : ${formData.middleName}</p>
+            <p>Last Name : ${formData.lastName}</p>
+            <p>Legal Name as per Govt ID : ${formData.legalName}</p>
+            <p>Title : ${formData.title}</p>
+            <p>Manager(internal) : ${formData.manager}</p>
+            <p>Personal Cell Phone : ${formData.personalCell}</p>
+            <p>Personal Email : ${formData.personalEmail}</p>
+            <p>Country in which they work : ${formData.country}</p>
+            <p>StartDate : ${formData.startDate}</p>
+            <p>EndDate : ${formData.endDate}</p>
+            <p>Team/Project : ${formData.team}</p>
+            <p>Sub-Geo : ${formData.subGeo}</p>
+            <p>Please find the attached Aadhar document for the background verification process.</p>
+            <p><b>Details:</b></p>
+            <ul>
+                <li><b>Legal Name:</b> ${formData.legalName}</li>
+                <li><b>Title:</b> ${formData.title}</li>
+                <li><b>Team:</b> ${formData.team}</li>
+                <li><b>Sub-Geo:</b> ${formData.subGeo}</li>
+            </ul>
+            <p>Best regards,</p>
+            <p>Your Company</p>
+        `;
+
+        const attachments = [
+            {
+                filename: aadharDocument.originalname || 'AadharDocument.pdf', // Default filename if not provided
+                path: aadharDocument.path, // Temporary file path for attachment
+            },
+        ];
+        return this.sendEmail(to, cc, subject, htmlContent, attachments);
     }
 }
 
