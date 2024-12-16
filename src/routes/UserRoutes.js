@@ -15,6 +15,8 @@ const { updateUserStatus } = require('../controllers/updatingEmployeeStatus/Upda
 const express = require('express');
 const { getEmployeeDataById } = require('../controllers/employee/GetEmployeeDataById.Controller');
 const multer = require('multer');
+const { getAllbgvEmployee } = require('../controllers/employee/GetAllEmployeesData.Controller');
+const { getexportAllUsers } = require('../controllers/exportGetAllEmployees/ExportGetAllEmployee.Controller');
 
 
 const router = express.Router();
@@ -23,8 +25,13 @@ const upload = multer({
     dest: 'uploads/' // Temporary folder for file uploads
 });
 
+//BGV employee data
+router.get('/getbgvemployee', getAllbgvEmployee)
 
+//export all employee data
+router.get('/exportAllemployees', getexportAllUsers)
 
+//All employee data
 router.get('/', getAllUsers);
 router.post('/send-email', sendEmailHandler);
 router.put('/user/:userId', updateUser);
@@ -36,17 +43,16 @@ router.get('/statuses', getAllStatuses);
 
 // Route to create a new status
 router.post('/api/entries/', createStatus); 
-// Route to update a specific status by ID
 router.put('/api/entries/:id', updateStatus);
-// Route to delete a specific status by ID
 router.delete('/api/entries/:id', deleteStatus);
 router.get('/bgv-employeeform/:id', getEmployeeDataById);
+
+
 router.post('/adding-mail', postMailId);
-
 router.get('/emails', getAllEmailIds);
+
+
 router.post('/updatinguserstatus', updateUserStatus);
-
-
 router.put('/update-aadhar-email', upload.single('aadharDocument'), sendEmailAndUpdateData);
 
 

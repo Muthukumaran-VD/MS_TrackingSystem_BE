@@ -60,9 +60,9 @@ class NodemailerService extends EmailService {
 
     // Function to send Aadhar email with document attachment
     async sendAadharEmail(to, cc, formData, aadharDocument) {
-        console.log(formData);
         const subject = "Aadhar Document Submission for BGV";
         const htmlContent = `
+            <h3>Aadhar Document Submission for BGV</h3>
             <p>First Name : ${formData.firstName}</p>
             <p>Middle Name : ${formData.middleName}</p>
             <p>Last Name : ${formData.lastName}</p>
@@ -76,16 +76,8 @@ class NodemailerService extends EmailService {
             <p>EndDate : ${formData.endDate}</p>
             <p>Team/Project : ${formData.team}</p>
             <p>Sub-Geo : ${formData.subGeo}</p>
-            <p>Please find the attached Aadhar document for the background verification process.</p>
-            <p><b>Details:</b></p>
-            <ul>
-                <li><b>Legal Name:</b> ${formData.legalName}</li>
-                <li><b>Title:</b> ${formData.title}</li>
-                <li><b>Team:</b> ${formData.team}</li>
-                <li><b>Sub-Geo:</b> ${formData.subGeo}</li>
-            </ul>
             <p>Best regards,</p>
-            <p>Your Company</p>
+            <h3>${formData.firstName}</h3>
         `;
 
         const attachments = [
