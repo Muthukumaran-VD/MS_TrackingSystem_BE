@@ -3,8 +3,6 @@
 const { sendEmailHandler, sendEmailAndUpdateData } = require('../controllers/employee/SendBGVFormToEmployee');
 const { getAllUsers } = require('../controllers/employee/GetAllEmployees.Controller');
 const { updateUser } = require('../controllers/employee/UpdateEmployeebyId');
-const { postPasswordUser } = require('../controllers/UserPasswordController');
-const { loginUser } = require('../controllers/UserLoginAuthController');
 const { getAllStatuses } = require('../masterData/Controller/employeeStatusCrud/GetEmployeeStatus.Contoller');
 const { createStatus } = require('../masterData/Controller/employeeStatusCrud/PostEmployeeStatus.Contoller');
 const { updateStatus } = require('../masterData/Controller/employeeStatusCrud/UpdateEmployeeStatus.Contoller');
@@ -15,8 +13,8 @@ const { updateUserStatus } = require('../controllers/updatingEmployeeStatus/Upda
 const express = require('express');
 const { getEmployeeDataById } = require('../controllers/employee/GetEmployeeDataById.Controller');
 const multer = require('multer');
-const { getAllbgvEmployee } = require('../controllers/employee/GetAllEmployeesData.Controller');
 const { getexportAllUsers } = require('../controllers/exportGetAllEmployees/ExportGetAllEmployee.Controller');
+const { getAllBgvEmployees } = require('../controllers/bgvEmployee/GetAllEmployeesData.Controller');
 
 
 const router = express.Router();
@@ -26,7 +24,7 @@ const upload = multer({
 });
 
 //BGV employee data
-router.get('/getbgvemployee', getAllbgvEmployee)
+router.get('/getbgvemployee', getAllBgvEmployees)
 
 //export all employee data
 router.get('/exportAllemployees', getexportAllUsers)
@@ -35,8 +33,6 @@ router.get('/exportAllemployees', getexportAllUsers)
 router.get('/', getAllUsers);
 router.post('/send-email', sendEmailHandler);
 router.put('/user/:userId', updateUser);
-router.post('/signup', postPasswordUser);
-router.post('/login', loginUser);
 
 // Route to get all statuses
 router.get('/statuses', getAllStatuses);
