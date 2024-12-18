@@ -5,8 +5,6 @@ const fs = require('fs');
 
 const sendEmailHandler = async (req, res) => {
     const { to, cc, formData } = req.body;
-    console.log(formData);
-
     try {
         const newId = await insertEmailData(formData);
         const emailResult = await emailService.sendBGVRequestEmail(to, cc, newId);

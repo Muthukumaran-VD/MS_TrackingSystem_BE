@@ -112,9 +112,6 @@ const updateEmployeeData = async (data) => {
     ];
 
     try {
-        console.log('Executing query:', query);
-        console.log('With values:', values);
-
         return await new Promise((resolve, reject) => {
             db.query(query, values, (err, results) => {
                 if (err) {

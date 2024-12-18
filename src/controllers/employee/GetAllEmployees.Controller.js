@@ -1,4 +1,4 @@
-const { getAllUsersFromDB, getTotalUsersCount } = require('../../database/employee/GetUserIntoDatabase');
+const { getTotalUsersCount, getAllUsersEmployeeFromDB } = require('../../database/employee/GetUserIntoDatabase');
 
 // Get all users with pagination and search
 const getAllUsers = async (req, res) => {
@@ -7,9 +7,9 @@ const getAllUsers = async (req, res) => {
 
         // Fetch the total number of users that match the search
         const totalUsers = await getTotalUsersCount(search);
-        
+
         // Fetch users based on pagination and search
-        getAllUsersFromDB(search, page, limit, (err, users) => {
+        getAllUsersEmployeeFromDB(search, page, limit, (err, users) => {
             if (err) {
                 res.status(500).json({ error: 'Failed to retrieve data' });
             } else {
@@ -26,5 +26,6 @@ const getAllUsers = async (req, res) => {
         res.status(500).json({ error: 'Failed to retrieve data' });
     }
 };
+
 
 module.exports = { getAllUsers };

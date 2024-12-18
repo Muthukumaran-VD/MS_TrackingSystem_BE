@@ -1,4 +1,6 @@
-const { getAllUsersBgvEmployeeFromDB, getTotalBgvUsersCount } = require('../../database/employee/GetUserIntoDatabase');
+const { getTotalBgvUsersCount, getAllUsersBgvEmployeeFromDB } = require("../../database/bgvEmployee/GetBGVUserIntoDatabase");
+
+
 
 // Get all users with pagination and search
 const getAllBgvEmployees = async (req, res) => {
