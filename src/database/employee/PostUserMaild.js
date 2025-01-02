@@ -73,6 +73,7 @@ async function insertEmailData(formData) {
 
 const updateEmployeeData = async (data) => {
     const bgvRequestStatus = 'Personal Details Shared';
+    const personalDetailsSharedDate = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
     const query = `
         UPDATE listmsaccounttrackings
         SET 
@@ -89,7 +90,8 @@ const updateEmployeeData = async (data) => {
             Work_End_Date = ?, 
             Project = ?, 
             Sub_Geo = ?,
-            BGV_Request_status = ?
+            BGV_Request_status = ?,
+            Personal_details_shared_date = ?  -- Add the update for the date here
         WHERE ID = ?
     `;
 
@@ -107,8 +109,9 @@ const updateEmployeeData = async (data) => {
         data.endDate || null,
         data.team || null,
         data.subGeo || null,
-        bgvRequestStatus, // Place BGV_Request_status here
-        data.id || null,  // Place ID at the correct position for the WHERE clause
+        bgvRequestStatus,
+        personalDetailsSharedDate, // Set the current date here
+        data.id || null,  // ID for the WHERE clause
     ];
 
     try {
@@ -126,6 +129,7 @@ const updateEmployeeData = async (data) => {
         throw new Error('Failed to update employee data');
     }
 };
+
 
 
 module.exports = { insertEmailData, updateEmployeeData };
