@@ -1,13 +1,13 @@
 const { updateUserStatusId, checkUserById } = require('../../database/updaingUserStatus/UpdatingUserStatus');
 
 const updateUserStatus = async (req, res) => {
-    const { userId, status } = req.body;
+    const {userId,status,screenshot } = req.body;
     try {
         const userExists = await checkUserById(userId);
         if (!userExists) {
             return res.status(404).json({ message: 'User ID not found.' });
         }
-
+        
         // Now the result from 'updateUserStatusId' contains 'affectedRows'
         const result = await updateUserStatusId(userId, status);
 
