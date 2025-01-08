@@ -40,7 +40,8 @@ router.get('/emails', getAllEmailIds);
 router.post('/updatinguserstatus', updateUserStatus);
 router.put('/update-aadhar-email', upload.single('aadharDocument'), sendEmailAndUpdateData);
 
+// Handle the POST request to update BGV status
 
-router.post('/update-bgv/:userId', updateUserStatus);
+router.post('/update-bgv/:userId', upload.single('document'), updateUserStatus);
 
 module.exports = router;
